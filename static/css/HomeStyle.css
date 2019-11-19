@@ -1,0 +1,31 @@
+body{
+    background-color: #ffffff;
+}
+.center_div{
+    background-color:#4d5cb1;
+    width:500px;
+    height:400px;
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    margin:auto;
+    border-radius:5px;
+    color:#ffffff;
+}
+#bouton{
+    background-color:#212c31;
+    color: #ffffff;
+}
+
+.footer{
+    margin-top:8rem;
+}
+#bouton:hover{
+    background-color:#74586f;
+}
+@media only screen and (min-width:300px) and (max-width:450px){
+    .center_div{width:320px;height:350px;}
+    .footer{margin-top:3rem;}
+}
