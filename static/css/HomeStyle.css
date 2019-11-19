@@ -1,11 +1,12 @@
 body{
     background-color: #ffffff;
+    color: black;
 }
+
 .center_div{
     background-color:#4d5cb1;
     width:500px;
-    height:400px;
-    position:absolute;
+    max-height: 600px;
     top:0;
     bottom:0;
     left:0;
@@ -13,6 +14,7 @@ body{
     margin:auto;
     border-radius:5px;
     color:#ffffff;
+    margin-top: 4rem;
 }
 #bouton{
     background-color:#212c31;
@@ -21,6 +23,7 @@ body{
 
 .footer{
     margin-top:8rem;
+    color:black;
 }
 #bouton:hover{
     background-color:#74586f;

@@ -38,13 +38,13 @@
                 <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item">
-                    <a class="nav-link" href="#" style="color:white!important;"><i class="fa fa-plus-circle" aria-hidden="true"></i> Fournir</a>
+                    <a class="nav-link" href="#" style="color:white!important;"><span class="sr-only">(current)</span><i class="fa fa-plus-circle" aria-hidden="true"></i> Fournir</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#" style="color:white!important;">Mes offres</a>
                   </li>
                 </ul>
-                <a class="nav-link" href="/profile" style="color:white!important;"><span class="sr-only">(current)</span><i class="fa fa-user" aria-hidden="true"></i></a>
+                <a class="nav-link" href="/profile" style="color:white!important;"><i class="fa fa-user" aria-hidden="true"></i></a>
                 <a class="nav-link" href="/disconnect" style="color:white!important;"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
               </div>
 
@@ -52,24 +52,30 @@
             <div class="container">
 
                 <div class="col-md-6" style="margin: 0 auto;">
-                    <h2 class="text-center" style="padding-top:3rem;">Modifier mon profil</h2><hr/>
+                    <h2 class="text-center" style="padding-top:3rem;">Ajouter un nouveau plat</h2><hr/>
                     <form>
                          <div class="form-group">
-		                        <label for="nom">Nom</label>
-		                        <input type="text" class="form-control" value="{{ Nom }}" name="change-lname" id="change-lname">
+		                        <label for="title">Titre</label>
+		                        <input type="text" autocomplete="off" class="form-control" placeholder="Titre ..." name="title" id="title">
                          </div>
                          <div class="form-group">
-		                        <label for="nom">Prénom</label>
-		                        <input type="text" class="form-control" value="{{ Prenom }}" name="change-fname" id="change-fname">
-                         </div>
+                            <label for="categorie">Catégories</label>
+                           <select class="form-control">
+                                <option>Boisson</option>
+                                <option>Déssert</option>
+                                <option>Entrée</option>
+                                <option>Plat</option>
+                                <option>Salade</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                          </div>
                         <div class="form-group">
-		                        <label for="nom">Téléphone</label>
-		                        <input type="text" class="form-control" value="{{ Phone }}" name="change-phone" id="change-phone">
+		                        <label for="price">Prix $</label>
+		                        <input type="number" class="form-control" name="price" id="price">
                          </div>
-                        <div class="form-group">
-                            <a class="btn btn-secondary btn-lg" href="/change_password"><i class="fa fa-pencil" aria-hidden="true"></i> Mot de passe</a>
-
-                        </div>
                          <button type="button" class="btn btn-primary" name="save">Enregistrer</button>
                          <button type="submit" class="btn btn-primary" name="cancel">Annuler</button>
                     </form>

@@ -1,10 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+<!--[if IE 7]>                  <html class="ie7 no-js" lang="fr">     <![endif]-->
+<!--[if lte IE 8]>              <html class="ie8 no-js" lang="fr">     <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="fr">  <!--<![endif]-->
+    <head>
+
+        <!-- Basic Page Needs -->
+        <meta charset="utf-8">
+        <title>Connexion - FoodSharing</title>
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!-- Mobile Specific Metas -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" href="" type="image/gif" sizes="16x16">
+        <!-- Styles -->
+
+        <!-- Bootstrap -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/static/css/HomeStyle.css" rel="stylesheet">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+
+    <body>
+
+            <nav class="navbar navbar-light" style="background-color:#4d5cb1;">
+              <a class="navbar-brand" href="#" style="color:white;">FoodSharing</a>
+            </nav>
+            <div class="container center_div">
+                        <h2 class="text-center"><strong>Se connecter</strong><br></h2><br>
+                        <div>
+                            <!-- Start form -->
+                                    <form id="log-form">
+                                      <div class="form-group">
+                                        <label for="usern">Email</label>
+                                        <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="Entrez votre adresse mail" autocomplete="off" requiered>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="Password1">Mot de passe</label>
+                                        <input type="password" class="form-control" name="password" id="password" placeholder="Mot de passe"  autocomplete="off" requiered>
+                                      </div>
+                                      <div class="alert alert-danger champ_log" style="display:none;">
+                                            <strong>La combinaison email/mot de passe est invalide</strong>
+                                      </div>
+                                      <div class="form-group">
+                                        <button type="button" id="bouton" class="btn btn-outline-light btn-lg btn-block bouton-connect">Se connecter</button>
+                                      </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <a href="/inscription" class="btn btn-light btn-lg btn-block">S'inscrire</a>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <a href="/recover" class="btn btn-light btn-lg btn-block">Mot de passe oublié</a></div>
+                                            </div>
+                                    </div>
+
+                                    </form>
+                            <!-- End form -->
+                        </div>
+
+
+				<div class="text-center footer">
+		            <p>© {{ year }} FoodSharing Tous droits réservés.</p>
+		        </div>
+			</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(()=>{
+                $(".bouton-connect").click(()=>{
+                    var form = document.getElementById("log-form");
+                    if ($(form)[0].checkValidity()) {
+                        $.ajax({
+                            data : $(form).serialize(),
+                            type : 'post',
+                            url : '/login',
+                            success : function(html) {
+                                if(html=="0"){
+                                    $(".champ_log").css("display","block");
+                                }else if(html == "1"){
+                                    window.location = "/accueil";
+                                }else {
+                                    $(".champ_log").css("display","block");
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+
+        </script>
+    </body>

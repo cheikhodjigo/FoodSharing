@@ -1,10 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!--[if IE 7]>                  <html class="ie7 no-js" lang="fr">     <![endif]-->
+<!--[if lte IE 8]>              <html class="ie8 no-js" lang="fr">     <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html class="not-ie no-js" lang="fr">  <!--<![endif]-->
+    <head>
 
-</body>
-</html>
+        <!-- Basic Page Needs -->
+        <meta charset="utf-8">
+        <title>Accueil - FoodSharing</title>
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!-- Mobile Specific Metas -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" href="" type="image/gif" sizes="16x16">
+        <!-- Styles -->
+
+        <!-- Bootstrap -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/static/css/HomeStyle.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+    </head>
+
+    <body>
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#4d5cb1;">
+                  <a class="navbar-brand" href="/" style="color:white!important;">FoodSharing</a>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/add_offer" style="color:white!important;"><i class="fa fa-plus-circle" aria-hidden="true"></i> Fournir</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#" style="color:white!important;">Mes offres</a>
+                  </li>
+                </ul>
+                <a class="nav-link" href="/profile" style="color:white!important;"><i class="fa fa-user" aria-hidden="true"></i></a>
+                <a class="nav-link" href="/disconnect" style="color:white!important;"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+              </div>
+
+            </nav>
+            <div class="container">
+                <div class="col-md-8" style="margin: 0 auto;">
+                    <form class="inline-form" style="padding-top: 3rem;">
+                        <input type="search" class="form-control" id="search-input" name="search-input" placeholder="Rechercher ..."/>
+                    </form>
+
+                </div>
+
+
+				<div class="text-center footer">
+                    <hr/>
+		            <p>© {{ year }} FoodSharing Tous droits réservés.</p>
+		        </div>
+			</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
+        <script>
+
+		</script>
+    </body>
