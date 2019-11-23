@@ -21,6 +21,30 @@ body{
     color: #ffffff;
 }
 
+.message{
+   margin-top: 3rem;
+}
+
+.offer_container{
+    background: #eaeaea;
+    color: black;
+    border-radius: 3px;
+}
+.offer_container:hover{
+    background: #f9f6f6;
+}
+.offer_container_link:hover{
+    color: black;
+    text-decoration: none;
+}
+.btn-delete-offer{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+}
+
 .footer{
     margin-top:8rem;
     color:black;

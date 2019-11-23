@@ -77,26 +77,12 @@
 			</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/static/js/MainJS.js"></script>
         <script>
             $(document).ready(()=>{
                 $(".bouton-inscript").click(()=>{
-                    var form = document.getElementById("form-subscribe");
-                    if ($(form)[0].checkValidity()) {
-                        $.ajax({
-                            data : $(form).serialize(),
-                            type : 'post',
-                            url : '/inscription',
-                            success : function(html) {
-                                if(html=="0"){
-                                    $('.invalid-password').css("display", "block");
-                                }else if(html == "1"){
-                                    window.location = "/successInscription";
-                                }
-                            }
-                        });
-                    }
+                    add_user();
                 });
             });
-
         </script>
     </body>

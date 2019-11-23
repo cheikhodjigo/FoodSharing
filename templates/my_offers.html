@@ -38,10 +38,10 @@
                 <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item">
-                    <a class="nav-link" href="#" style="color:white!important;"><span class="sr-only">(current)</span><i class="fa fa-plus-circle" aria-hidden="true"></i> Fournir</a>
+                    <a class="nav-link" href="/add_offer" style="color:white!important;"><i class="fa fa-plus-circle" aria-hidden="true"></i> Fournir</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="my_offers" style="color:white!important;">Mes offres</a>
+                    <a class="nav-link" href="/my_offers" style="color:white!important;">Mes Offres</a>
                   </li>
                 </ul>
                 <a class="nav-link" href="/profile" style="color:white!important;"><i class="fa fa-user" aria-hidden="true"></i></a>
@@ -50,49 +50,46 @@
 
             </nav>
             <div class="container">
+                <div class="col-md-8" style="margin: 0 auto;">
+                    <h2 class="text-center message">Mes Offres</h2>
 
-                <div class="col-md-6" style="margin: 0 auto;">
-                    <h2 class="text-center" style="padding-top:3rem;">Ajouter un nouveau plat</h2><hr/>
-                    <form id="form-add-offer">
-                         <div class="form-group">
-		                        <label for="title">Titre</label>
-		                        <input type="text" autocomplete="off" class="form-control" placeholder="Titre ..." name="title" id="title">
-                         </div>
-                         <div class="form-group">
-                            <label for="categorie">Catégories</label>
-                           <select class="form-control" name="categorie">
-                               {% for categorie_infos in categories %}
-                                    <option value="{{ categorie_infos[0] }}">{{ categorie_infos[1] }}</option>
-                               {% endfor %}
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
-                          </div>
-                        <div class="form-group">
-		                        <label for="price">Prix $</label>
-		                        <input type="number" class="form-control" name="price" id="price">
-                         </div>
-                         <button type="button" class="btn btn-primary bouton-add-offer" name="save">Enregistrer</button>
-                         <button type="button" class="btn btn-primary" name="cancel">Annuler</button>
-                    </form>
                 </div>
+    	        <div class="container">
+                    {% if user_offers is defined %}
+                        {% for offer_info in user_offers %}
+                            <a class="offer_container_link" href="#">
+                                <div class="row offer_container">
+                                    <div class="col-md-9">
+                                        <h3>{{ offer_info[3] }}</h3>
+                                        <p>{{ offer_info[4] }}</p>
+                                        <p>{{ offer_info[5] }} $</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button type="button" class="btn btn-secondary btn-sm btn-delete-offer" id="{{ offer_info[0] }}"><i class="fa fa-trash-o fa-lg"></i> Supprimer</button>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                    {% else %}
+                        <h3 class="text-center">Vous n'avez pas d'offres à votre compte présentement</h3>
+                    {% endif %}
 
-
+		        <div>
 				<div class="text-center footer">
-                    <hr/>
-		            <p>© {{ year }} FoodSharing Tous droits réservés.</p>
+                    <hr>
+		            <p>© 2019 FoodSharing Tous droits réservés.</p>
 		        </div>
-			</div>
+			</div></div></div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/static/js/MainJS.js"></script>
 
+        <script type="text/javascript" src="/static/js/MainJS.js"></script>
         <script>
             $(document).ready(()=>{
-                $(".bouton-add-offer").click(()=>{
-                    add_offer();
+                $(".btn-delete-offer").click(()=>{
+                    if (confirm('Êtes vous sûre de vouloir supprimer?')) {
+                        delete_annonce($(this).attr('id'));
+                    }
                 });
             });
         </script>

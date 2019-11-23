@@ -38,10 +38,10 @@
                 <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item">
-                    <a class="nav-link" href="#" style="color:white!important;"><span class="sr-only">(current)</span><i class="fa fa-plus-circle" aria-hidden="true"></i> Fournir</a>
+                    <a class="nav-link" href="/add_offer" style="color:white!important;"><i class="fa fa-plus-circle" aria-hidden="true"></i> Fournir</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="my_offers" style="color:white!important;">Mes offres</a>
+                    <a class="nav-link" href="#" style="color:white!important;">Mes offres</a>
                   </li>
                 </ul>
                 <a class="nav-link" href="/profile" style="color:white!important;"><i class="fa fa-user" aria-hidden="true"></i></a>
@@ -50,33 +50,10 @@
 
             </nav>
             <div class="container">
-
-                <div class="col-md-6" style="margin: 0 auto;">
-                    <h2 class="text-center" style="padding-top:3rem;">Ajouter un nouveau plat</h2><hr/>
-                    <form id="form-add-offer">
-                         <div class="form-group">
-		                        <label for="title">Titre</label>
-		                        <input type="text" autocomplete="off" class="form-control" placeholder="Titre ..." name="title" id="title">
-                         </div>
-                         <div class="form-group">
-                            <label for="categorie">Catégories</label>
-                           <select class="form-control" name="categorie">
-                               {% for categorie_infos in categories %}
-                                    <option value="{{ categorie_infos[0] }}">{{ categorie_infos[1] }}</option>
-                               {% endfor %}
-                            </select>
-                          </div>
-                          <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
-                          </div>
-                        <div class="form-group">
-		                        <label for="price">Prix $</label>
-		                        <input type="number" class="form-control" name="price" id="price">
-                         </div>
-                         <button type="button" class="btn btn-primary bouton-add-offer" name="save">Enregistrer</button>
-                         <button type="button" class="btn btn-primary" name="cancel">Annuler</button>
-                    </form>
+                <div class="col-md-8" style="margin: 0 auto;">
+                    <div class="alert alert-success message" role="alert">
+                      Votre offre vient d'être créer avec succés vous pouvez maintenant la voir dans <a href="/my_offers">vos offres</a>
+                    </div>
                 </div>
 
 
@@ -87,13 +64,9 @@
 			</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/static/js/MainJS.js"></script>
+
 
         <script>
-            $(document).ready(()=>{
-                $(".bouton-add-offer").click(()=>{
-                    add_offer();
-                });
-            });
-        </script>
+
+		</script>
     </body>
