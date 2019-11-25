@@ -65,7 +65,10 @@
                                         <p>{{ offer_info[5] }} $</p>
                                     </div>
                                     <div class="col-md-3">
-                                        <button type="button" class="btn btn-secondary btn-sm btn-delete-offer" id="{{ offer_info[0] }}"><i class="fa fa-trash-o fa-lg"></i> Supprimer</button>
+                                        <form>
+                                            <input hidden value="{{ offer_info[0] }}" name="offer_id" id="offer_id">
+                                            <button class="btn btn-secondary btn-sm btn-delete-offer"><i class="fa fa-trash-o fa-lg"></i> Supprimer</button>
+                                        </form>
                                     </div>
                                 </div>
                             </a>
@@ -85,12 +88,11 @@
 
         <script type="text/javascript" src="/static/js/MainJS.js"></script>
         <script>
-            $(document).ready(()=>{
-                $(".btn-delete-offer").click(()=>{
-                    if (confirm('Êtes vous sûre de vouloir supprimer?')) {
-                        delete_annonce($(this).attr('id'));
-                    }
-                });
+            $( "form" ).on( "submit", function( event ) {
+              event.preventDefault();
+              if (confirm('Êtes vous sûre de vouloir supprimer?')) {
+                delete_annonce($( this ).serialize());
+              }
             });
         </script>
     </body>

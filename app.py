@@ -138,7 +138,7 @@ def delete_user_offer():
     if session.get("id") is None:
         return redirect('/')
     else:
-        offer_id = request.args.get('id')
+        offer_id = request.form['offer_id']
         db = Database()
         db.delete_offer_from_user(offer_id)
         return "1"

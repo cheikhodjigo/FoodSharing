@@ -36,14 +36,13 @@ function add_offer(){
 
 function delete_annonce(id){
     $.ajax({
-        data : {id:id},
-        type : 'post',
-        url : '/delete_user_offer',
-        success : function(html) {
-            if(html == "1"){
+        data: id,
+        type: 'post',
+        url: '/delete_user_offer',
+        success: function (html) {
+            if (html == "1") {
                 location.reload();
             }
         }
     });
-
 }
