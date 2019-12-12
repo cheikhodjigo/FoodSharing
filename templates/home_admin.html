@@ -6,7 +6,7 @@
 
         <!-- Basic Page Needs -->
         <meta charset="utf-8">
-        <title>Accueil - FoodSharing</title>
+        <title>Accueil Administrateur - FoodSharing</title>
         <meta name="description" content="">
         <meta name="author" content="">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,7 +41,10 @@
                     <a class="nav-link" href="/add_offer" style="color:white!important;"><i class="fa fa-plus-circle" aria-hidden="true"></i> Fournir</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/my_offers" style="color:white!important;">Mes Offres</a>
+                    <a class="nav-link" href="/my_offers" style="color:white!important;">Mes offres</a>
+                  </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="#" style="color:white!important;">Gérer</a>
                   </li>
                 </ul>
                 <a class="nav-link" href="/profile" style="color:white!important;"><i class="fa fa-user" aria-hidden="true"></i></a>
@@ -50,49 +53,46 @@
 
             </nav>
             <div class="container">
-                <div class="col-md-8" style="margin: 0 auto;">
-                    <h2 class="text-center message">Mes Offres</h2>
-
+                <div class="row">
+                    <div class="col-md-8" style="margin: 0 auto;">
+                        <form class="form-inline md-form form-sm mt-0" style="padding-top: 2rem;">
+                          <i class="fa fa-search" aria-hidden="true"></i>
+                          <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
+                            aria-label="Search">
+                        </form>
+                    </div>
                 </div>
-    	        <div class="container">
-                    {% if user_offers|length %}
-                        {% for offer_info in user_offers %}
-                            <a class="offer_container_link" href="#">
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <h3>{{ offer_info[3] }}</h3>
-                                        <p>{{ offer_info[4] }}</p>
-                                        <p>{{ offer_info[5] }} $</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <form>
-                                            <input hidden value="{{ offer_info[0] }}" name="offer_id" id="offer_id">
-                                            <button class="btn btn-secondary btn-sm btn-delete-offer"><i class="fa fa-trash-o fa-lg"></i> Supprimer</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </a>
+                <div class="row">
+                    <div class="col-md-12"><h2 class="text-center" style="
+                        padding-top: 6rem;
+                        ">Les Offres</h2></div>
+                </div>
+                <div class="row">
+                    {% if offers is defined %}
+                        {% for offer_info in offers %}
+                            <div class="col-md-4" style="/*margin-right: 3px;*/">
+                            <article class="offer_container">
+                              <h2>{{ offer_info[3] }}</h2>
+                              <p> {{ offer_info[5] }} $</p>
+                              <p><a class="btn btn-secondary" href="/offer/{{ offer_info[0] }}" role="button">Voir détails &raquo;</a></p>
+                            </article>
+                            </div>
                         {% endfor %}
                     {% else %}
-                        <h3 class="text-center" style="color:grey;">Vous n'avez pas d'offres à votre compte présentement</h3>
+                        <div class="col-md-12"><h3 class="text-center" style="color:yellowgreen">Il n'y a pas d'annonces présentement</h3></div>
                     {% endif %}
 
-		        <div>
+                </div>
 				<div class="text-center footer">
-                    <hr>
-		            <p>© 2019 FoodSharing Tous droits réservés.</p>
+                    <hr/>
+		            <p>© {{ year }} FoodSharing Tous droits réservés.</p>
 		        </div>
-			</div></div></div>
+			</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-        <script type="text/javascript" src="/static/js/MainJS.js"></script>
+
         <script>
-            $( "form" ).on( "submit", function( event ) {
-              event.preventDefault();
-              if (confirm('Êtes vous sûre de vouloir supprimer?')) {
-                delete_annonce($( this ).serialize());
-              }
-            });
-        </script>
+
+		</script>
     </body>

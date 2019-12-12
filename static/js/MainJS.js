@@ -46,3 +46,59 @@ function delete_annonce(id){
         }
     });
 }
+
+function update_user_information(form){
+    if ($(form)[0].checkValidity()) {
+        $.ajax({
+            data: $(form).serialize(),
+            type: 'post',
+            url: '/update_user_infos',
+            success: function (html) {
+                if (html == "1") {
+                    location.reload();
+                }else{
+                    $('.s').html(html);
+                }
+            }
+        });
+    }
+}
+
+function connect(){
+    let form = document.getElementById("log-form");
+    if ($(form)[0].checkValidity()) {
+        $.ajax({
+            data : $(form).serialize(),
+            type : 'post',
+            url : '/login',
+            success : function(html) {
+                if(html=="0"){
+                    $(".champ_log").css("display","block");
+                }else if(html == "2"){
+                    window.location = "/accueil";
+                }else if(html == "1") {
+                    window.location = "/admin";
+                }else{
+                    $(".champ_log").css("display","block");
+                }
+            }
+        });
+    }
+}
+
+function search_value(form){
+    if ($(form)[0].checkValidity()) {
+        $.ajax({
+            data: $(form).serialize(),
+            type: 'post',
+            url: '/update_user_infos',
+            success: function (html) {
+                if (html == "1") {
+                    location.reload();
+                }else{
+                    $('.s').html(html);
+                }
+            }
+        });
+    }
+}

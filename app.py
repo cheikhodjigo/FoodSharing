@@ -12,9 +12,14 @@ now = datetime.datetime.now().year
 @app.route('/')
 def get_login_page():
     if session.get('id') is None:
-        return render_template('Home.html', year=now)
+        return render_template('login.html', year=now)
     else:
-        return redirect('/accueil')
+        db = Database()
+        role = session.get("role")
+        if role == "Administrateur":
+            return redirect('/admin')
+        else:
+            return redirect('/accueil')
 
 
 @app.route('/inscription', methods=['POST', 'GET'])
@@ -32,6 +37,7 @@ def log_into_the_system():
             mail = request.form['mail']
             db = Database()
             db.add_user(first_name, name, mail, generate_password_hash(passw))
+            db.disconnect()
             return "1"
 
 
@@ -42,12 +48,26 @@ def home_page():
     else:
         db = Database()
         offers = db.get_all_offers()
-        return render_template('Navigate.html', year=now, offers=offers)
+        categories = db.get_categories()
+        db.disconnect()
+        return render_template('home.html', year=now, offers=offers, categories=categories)
+
+
+@app.route('/admin')
+def home_page_admin():
+    if session.get("id") is None:
+        return redirect('/')
+    else:
+        db = Database()
+        offers = db.get_all_offers()
+        categories = db.get_categories()
+        db.disconnect()
+        return render_template('home_admin.html', year=now, offers=offers, categories=categories)
 
 
 @app.route('/successInscription')
 def success_inscription_page():
-    return render_template('Done_Inscription.html', year=now)
+    return render_template('success_subscribe.html', year=now)
 
 
 @app.route('/profile')
@@ -57,6 +77,7 @@ def access_profile():
     else:
         db = Database()
         user_infos = db.get_user_by_id(session.get('id'))
+        db.disconnect()
         return render_template('my_profile.html', year=now, user_infos=user_infos)
 
 
@@ -67,8 +88,8 @@ def access_offer_info(id):
     else:
         db = Database()
         offer_info = db.get_offer_by_id(id)
-        db1 = Database()                    # set a method to close the database
-        user=db1.get_user_by_id(offer_info[2])
+        user = db.get_user_by_id(offer_info[2])
+        db.disconnect()
         return render_template('offer.html', year=now, offer_info=offer_info, user=user)
 
 
@@ -95,6 +116,7 @@ def access_my_offers_created():
     else:
         db = Database()
         user_offers = db.get_offers(session.get('id'))
+        db.disconnect()
         return render_template('my_offers.html', year=now, user_offers=user_offers)
 
 
@@ -103,9 +125,10 @@ def add_offer():
     if session.get("id") is None:
         return redirect('/')
     else:
+        db = Database()
         if request.method == 'GET':
-            db = Database()
             categories = db.get_categories()
+            db.disconnect()
             return render_template('add_offer.html', year=now, categories=categories)
         else:
             categorie = request.form['categorie']
@@ -113,24 +136,9 @@ def add_offer():
             description = request.form['description']
             price = request.form['price']
             user_id = session.get('id')
-            db = Database()
             db.add_offer(categorie, user_id, title, description, price)
+            db.disconnect()
             return "1"
-
-
-@app.route('/login', methods=['POST'])
-def check_user():
-    mail = request.form["email"]
-    password = request.form["password"]
-    db = Database()
-    result = db.get_user_by_mail(mail)
-    if result is None:
-        return "0"
-    elif check_password_hash(result[2], password):
-        session["id"] = result[0]
-        return "1"
-    else:
-        return "2"
 
 
 @app.route('/delete_user_offer', methods=['POST'])
@@ -141,7 +149,60 @@ def delete_user_offer():
         offer_id = request.form['offer_id']
         db = Database()
         db.delete_offer_from_user(offer_id)
+        db.disconnect()
         return "1"
+
+
+@app.route('/update_user_infos', methods=['POST'])
+def update_user_infos():
+    if session.get("id") is None:
+        return redirect('/')
+    else:
+        user_id = session.get('id')
+        fname = request.form['change-fname']
+        lname = request.form['change-lname']
+        phone = request.form['change-phone']
+        mail = request.form['change-email']
+        db = Database()
+        db.change_user_information(fname, lname, mail, phone, user_id)
+        db.disconnect()
+        return render_template("success_update_message.html")
+
+
+@app.route("/search_results", methods=['GET'])
+def find_results():
+    value = request.args.get('search_value')
+    categorie = request.args.get('categorie')
+    db = Database()
+    offers = db.search_offers(value, categorie)
+    categories = db.get_categories()
+    db.disconnect()
+    return render_template('result_research.html', year=now, offers=offers, categories=categories)
+
+
+@app.route('/login', methods=['POST'])
+def check_user():
+    mail = request.form["username"]
+    password = request.form["password"]
+    db = Database()
+    result = db.get_user_by_mail(mail)
+    if result is None:
+        db.disconnect()
+        return "0"
+    elif check_password_hash(result[2], password):
+        session["id"] = result[0]
+        role = db.get_user_role(result[0])
+        db.disconnect()
+        if role[0] == "Administrateur":
+            session["role"] = role
+            return "1"
+        elif role[0] == "Utilisateur":
+            session["role"] = role
+            return "2"
+        else:
+            return "3"
+    else:
+        return "3"
 
 
 @app.route('/disconnect', methods=['GET'])

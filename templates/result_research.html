@@ -50,31 +50,43 @@
 
             </nav>
             <div class="container">
-                <div class="row">
-                    <div class="col-md-8" style="margin: 0 auto;">
-                        <form class="form-inline md-form form-sm mt-0" style="padding-top: 2rem;">
-                          <i class="fa fa-search" aria-hidden="true"></i>
-                          <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
-                            aria-label="Search">
-                        </form>
+                <form style="padding-top: 2rem;" action="/search_results" method="get">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                          <input class="form-control" name="search_value" type="text" placeholder="Rechercher ..." aria-label="Search">
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control" name="categorie">
+                                <option value="-1">Catégories</option>
+                               {% for categorie_infos in categories %}
+                                    <option value="{{ categorie_infos[0] }}">{{ categorie_infos[1] }}</option>
+                               {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                          <button class="btn btn-primary btn-block search">Rechercher</button>
+                        </div>
                     </div>
-                </div>
+                </form>
                 <div class="row">
                     <div class="col-md-12"><h2 class="text-center" style="
                         padding-top: 6rem;
-                        ">Les Offres</h2></div>
+                        ">Résultat de la recherche </h2></div>
                 </div>
                 <div class="row">
-                    {% if offers is defined %}
+                    {% if offers|length %}
                         {% for offer_info in offers %}
-                            <div class="col-md-3 offer_container" style="margin-right: 3px;">
+                            <div class="col-md-4" style="/*margin-right: 3px;*/">
+                            <article class="offer_container">
                               <h2>{{ offer_info[3] }}</h2>
                               <p> {{ offer_info[5] }} $</p>
                               <p><a class="btn btn-secondary" href="/offer/{{ offer_info[0] }}" role="button">Voir détails &raquo;</a></p>
+                            </article>
                             </div>
                         {% endfor %}
                     {% else %}
-                        <div class="col-md-12"><h3 class="text-center" style="color:yellowgreen">Il n'y a pas d'annonces présentement</h3></div>
+                        <div class="col-md-12"><h3 class="text-center" style="color:grey;">Aucune annonces correspondantes </h3></div>
                     {% endif %}
 
                 </div>
@@ -85,9 +97,5 @@
 			</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-
-        <script>
-
-		</script>
+        <script type="text/javascript" src="/static/js/MainJS.js"></script>
     </body>
