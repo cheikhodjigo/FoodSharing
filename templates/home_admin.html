@@ -43,8 +43,18 @@
                   <li class="nav-item">
                     <a class="nav-link" href="/my_offers" style="color:white!important;">Mes offres</a>
                   </li>
-                    <li class="nav-item">
-                    <a class="nav-link" href="#" style="color:white!important;">Gérer</a>
+                <li class="nav-item">
+                    <!--<a class="nav-link" href="#" style="color:white!important;">Gérer</a>-->
+                    <div class="dropdown show">
+                        <a class="nav-link dropdown-toggle" style="color:white!important;" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Gérer
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item" href="#">Utilisateurs</a>
+                            <a class="dropdown-item" href="#">Annonces</a>
+                        </div>
+                    </div>
                   </li>
                 </ul>
                 <a class="nav-link" href="/profile" style="color:white!important;"><i class="fa fa-user" aria-hidden="true"></i></a>
@@ -55,10 +65,24 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8" style="margin: 0 auto;">
-                        <form class="form-inline md-form form-sm mt-0" style="padding-top: 2rem;">
-                          <i class="fa fa-search" aria-hidden="true"></i>
-                          <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
-                            aria-label="Search">
+                        <form style="padding-top: 2rem;" action="/search_results" method="get">
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                  <input class="form-control" name="search_value" type="text" placeholder="Rechercher ..." aria-label="Search">
+                                </div>
+                                <div class="col-md-4">
+                                    <select class="form-control" name="categorie">
+                                        <option value="-1">Catégories</option>
+                                       {% for categorie_infos in categories %}
+                                            <option value="{{ categorie_infos[0] }}">{{ categorie_infos[1] }}</option>
+                                       {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                  <button class="btn btn-primary btn-block search">Rechercher</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -90,9 +114,6 @@
 			</div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
-
-        <script>
-
-		</script>
+        <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/static/js/MainJS.js"></script>
     </body>

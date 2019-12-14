@@ -3,6 +3,14 @@ body{
     color: black;
 }
 
+.offer_title{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
 .center_div{
     background-color:#4d5cb1;
     width:500px;
@@ -30,6 +38,7 @@ body{
     color: black;
     border-radius: 3px;
 }
+
 .offer_container:hover{
     background: #f9f6f6;
 }
@@ -53,6 +62,6 @@ body{
     background-color:#74586f;
 }
 @media only screen and (min-width:300px) and (max-width:450px){
-    .center_div{width:320px;height:350px;}
+    .center_div{width:320px;height:429px;}
     .footer{margin-top:3rem;}
 }

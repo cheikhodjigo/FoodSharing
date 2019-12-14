@@ -78,6 +78,8 @@ function connect(){
                     window.location = "/accueil";
                 }else if(html == "1") {
                     window.location = "/admin";
+                }else if(html == "4"){
+                    $(".champ_inactive_user").css("display","block");
                 }else{
                     $(".champ_log").css("display","block");
                 }

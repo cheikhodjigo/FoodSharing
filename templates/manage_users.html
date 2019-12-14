@@ -41,7 +41,7 @@
                     <a class="nav-link" href="/add_offer" style="color:white!important;"><i class="fa fa-plus-circle" aria-hidden="true"></i> Fournir</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/my_offers" style="color:white!important;">Mes offres</a>
+                    <a class="nav-link" href="/my_offers" style="color:white!important;">Mes Offres</a>
                   </li>
                     {%  if role == 'Administrateur' %}
                         <li class="nav-item">
@@ -59,34 +59,70 @@
                         </li>
                     {% endif %}
                 </ul>
-                <a class="nav-link" href="/profile" style="color:white!important;"><span class="sr-only">(current)</span><i class="fa fa-user" aria-hidden="true"></i></a>
+                <a class="nav-link" href="/profile" style="color:white!important;"><i class="fa fa-user" aria-hidden="true"></i></a>
                 <a class="nav-link" href="/disconnect" style="color:white!important;"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
               </div>
 
             </nav>
             <div class="container">
-                <div class="row">
-                    <div class="col-md-6" style="margin: 0 auto;">
-                        <h2 class="text-center" style="padding-top:3rem;">{{ offer_info[3] }}</h2><hr/>
-                        <h3 style="padding-top:3rem;color: #4d5cb1;">Description</h3>
-                        <p>{{ offer_info[4] }}</p>
-                        <h3 style="padding-top:3rem;color: #4d5cb1;">Prix</h3>
-                        <p>{{ offer_info[5] }} $</p>
-                        <h3 style="padding-top:3rem;color: #4d5cb1;">Contact</h3>
-                        <p>{{ user[5] }}</p>
-                    </div>
+                <div class="col-md-8" style="margin: 0 auto;">
+                    <h2 class="text-center message">Utilisateurs</h2>
 
                 </div>
+    	        <div class="container">
+                    {% if users|length %}
+                         <table class="table">
+                          <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Nom</th>
+                                <th scope="col">Prénom</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                        {% for user in users%}
+                            <tr>
+                              <td>{{ user[2] }}</td>
+                              <td>{{ user[1] }}</td>
+                              <td>{{ user[3] }}</td>
+                              <td>{{ user[6] }}</td>
+                                <td>
+                                    <div class="row">
+                                        <a href="/change_user_status/{{ user[0] }}?p={{ user[6] }}" style="text-decoration: none; color: black;padding:.5rem;" title="Changer status">
+                                            {% if user[6] == "Actif" %}
+                                                <i class="fa fa-lock"></i>
+                                            {% else %}
+                                                <i class="fa fa-unlock"></i>
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                        <h3 class="text-center" style="color:grey;">Aucun utilisateurs inscrits</h3>
+                    {% endif %}
+
+		        <div>
 				<div class="text-center footer">
-                    <hr/>
-		            <p>© {{ year }} FoodSharing Tous droits réservés.</p>
+                    <hr>
+		            <p>© 2019 FoodSharing Tous droits réservés.</p>
 		        </div>
-			</div>
+			</div></div></div>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-
+        <script type="text/javascript" src="/static/js/MainJS.js"></script>
         <script>
-
-		</script>
+            $( "form" ).on( "submit", function( event ) {
+              event.preventDefault();
+              if (confirm('Êtes vous sûre de vouloir supprimer?')) {
+                delete_annonce($( this ).serialize());
+              }
+            });
+        </script>
     </body>

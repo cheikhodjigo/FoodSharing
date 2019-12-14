@@ -14,12 +14,7 @@ def get_login_page():
     if session.get('id') is None:
         return render_template('login.html', year=now)
     else:
-        db = Database()
-        role = session.get("role")
-        if role == "Administrateur":
-            return redirect('/admin')
-        else:
-            return redirect('/accueil')
+        return redirect('/accueil')
 
 
 @app.route('/inscription', methods=['POST', 'GET'])
@@ -49,8 +44,9 @@ def home_page():
         db = Database()
         offers = db.get_all_offers()
         categories = db.get_categories()
+        role = session.get("role")
         db.disconnect()
-        return render_template('home.html', year=now, offers=offers, categories=categories)
+        return render_template('home.html', year=now, offers=offers, categories=categories, role=role[0])
 
 
 @app.route('/admin')
@@ -77,8 +73,9 @@ def access_profile():
     else:
         db = Database()
         user_infos = db.get_user_by_id(session.get('id'))
+        role = session.get("role")
         db.disconnect()
-        return render_template('my_profile.html', year=now, user_infos=user_infos)
+        return render_template('my_profile.html', year=now, user_infos=user_infos, role=role[0])
 
 
 @app.route('/offer/<id>')
@@ -89,8 +86,9 @@ def access_offer_info(id):
         db = Database()
         offer_info = db.get_offer_by_id(id)
         user = db.get_user_by_id(offer_info[2])
+        role = session.get("role")
         db.disconnect()
-        return render_template('offer.html', year=now, offer_info=offer_info, user=user)
+        return render_template('offer.html', year=now, offer_info=offer_info, user=user, role=role[0])
 
 
 @app.route('/change_password')
@@ -98,7 +96,8 @@ def change_password():
     if session.get("id") is None:
         return redirect('/')
     else:
-        return render_template('change_password.html', year=now)
+        role = session.get("role")
+        return render_template('change_password.html', year=now, role=role[0])
 
 
 @app.route('/offer_created')
@@ -106,7 +105,8 @@ def access_offer_created():
     if session.get("id") is None:
         return redirect('/')
     else:
-        return render_template('success_offer_created.html', year=now)
+        role = session.get("role")
+        return render_template('success_offer_created.html', year=now, role=role[0])
 
 
 @app.route('/my_offers')
@@ -116,8 +116,39 @@ def access_my_offers_created():
     else:
         db = Database()
         user_offers = db.get_offers(session.get('id'))
+        role = session.get("role")
         db.disconnect()
-        return render_template('my_offers.html', year=now, user_offers=user_offers)
+        return render_template('my_offers.html', year=now, user_offers=user_offers, role=role[0])
+
+
+@app.route('/manage_offers')
+def manage_system_offers():
+    if session.get("id") is None:
+        return redirect('/')
+    else:
+        if session.get("role")[0] == "Administrateur":
+            db = Database()
+            offers = db.get_all_offers()
+            role = session.get("role")
+            db.disconnect()
+            return render_template('manage_offers.html', year=now, offers=offers, role=role[0])
+        else:
+            return redirect('/')
+
+
+@app.route('/manage_users')
+def manage_system_users():
+    if session.get("id") is None:
+        return redirect('/')
+    else:
+        if session.get("role")[0] == "Administrateur":
+            db = Database()
+            users = db.get_all_users_except_actual(session.get("id"))
+            role = session.get("role")
+            db.disconnect()
+            return render_template('manage_users.html', year=now, users=users, role=role[0])
+        else:
+            return redirect('/')
 
 
 @app.route('/add_offer', methods=['POST', 'GET'])
@@ -128,8 +159,9 @@ def add_offer():
         db = Database()
         if request.method == 'GET':
             categories = db.get_categories()
+            role = session.get("role")
             db.disconnect()
-            return render_template('add_offer.html', year=now, categories=categories)
+            return render_template('add_offer.html', year=now, categories=categories, role=role[0])
         else:
             categorie = request.form['categorie']
             title = request.form['title']
@@ -151,6 +183,17 @@ def delete_user_offer():
         db.delete_offer_from_user(offer_id)
         db.disconnect()
         return "1"
+
+
+@app.route('/delete_offer/<offer_id>')
+def delete_offer(offer_id):
+    if session.get("id") is None:
+        return redirect('/')
+    else:
+        db = Database()
+        db.delete_offer_from_user(offer_id)
+        db.disconnect()
+        return redirect("/manage_offers")
 
 
 @app.route('/update_user_infos', methods=['POST'])
@@ -176,8 +219,18 @@ def find_results():
     db = Database()
     offers = db.search_offers(value, categorie)
     categories = db.get_categories()
+    role = session.get("role")
     db.disconnect()
-    return render_template('result_research.html', year=now, offers=offers, categories=categories)
+    return render_template('result_research.html', year=now, offers=offers, categories=categories, role=role[0])
+
+
+@app.route("/change_user_status/<user_id>", methods=['GET'])
+def change_user_status(user_id):
+    user_status = request.args.get('p')
+    db = Database()
+    db.change_user_status(user_id, user_status)
+    db.disconnect()
+    return redirect("/manage_users")
 
 
 @app.route('/login', methods=['POST'])
@@ -190,17 +243,14 @@ def check_user():
         db.disconnect()
         return "0"
     elif check_password_hash(result[2], password):
-        session["id"] = result[0]
-        role = db.get_user_role(result[0])
-        db.disconnect()
-        if role[0] == "Administrateur":
-            session["role"] = role
-            return "1"
-        elif role[0] == "Utilisateur":
+        if result[3] == 'Inactif':
+            return "4"
+        else:
+            session["id"] = result[0]
+            role = db.get_user_role(result[0])
+            db.disconnect()
             session["role"] = role
             return "2"
-        else:
-            return "3"
     else:
         return "3"
 

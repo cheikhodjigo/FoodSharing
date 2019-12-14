@@ -43,7 +43,23 @@
                   <li class="nav-item">
                     <a class="nav-link" href="/my_offers" style="color:white!important;">Mes offres</a>
                   </li>
+                    {%  if role == 'Administrateur' %}
+                        <li class="nav-item">
+                            <!--<a class="nav-link" href="#" style="color:white!important;">Gérer</a>-->
+                            <div class="dropdown show">
+                                <a class="nav-link dropdown-toggle" style="color:white!important;" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Gérer
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                     <a class="dropdown-item" href="/manage_users">Utilisateurs</a>
+                                    <a class="dropdown-item" href="/manage_offers">Annonces</a>
+                                </div>
+                            </div>
+                        </li>
+                    {% endif %}
                 </ul>
+
                 <a class="nav-link" href="/profile" style="color:white!important;"><i class="fa fa-user" aria-hidden="true"></i></a>
                 <a class="nav-link" href="/disconnect" style="color:white!important;"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
               </div>
@@ -79,7 +95,7 @@
                         {% for offer_info in offers %}
                             <div class="col-md-4" style="/*margin-right: 3px;*/">
                             <article class="offer_container">
-                              <h2>{{ offer_info[3] }}</h2>
+                              <h2 class="offer_title" title="{{ offer_info[3] }}">{{ offer_info[3] }}</h2>
                               <p> {{ offer_info[5] }} $</p>
                               <p><a class="btn btn-secondary" href="/offer/{{ offer_info[0] }}" role="button">Voir détails &raquo;</a></p>
                             </article>
@@ -98,11 +114,4 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/static/js/MainJS.js"></script>
-
-        <script>
-            //$( "form" ).on( "submit", function( event ) {
-            //  event.preventDefault();
-            //  search_value($( this ).serialize());
-            //});
-        </script>
     </body>

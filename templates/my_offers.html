@@ -43,6 +43,21 @@
                   <li class="nav-item">
                     <a class="nav-link" href="/my_offers" style="color:white!important;">Mes Offres</a>
                   </li>
+                    {%  if role == 'Administrateur' %}
+                        <li class="nav-item">
+                            <!--<a class="nav-link" href="#" style="color:white!important;">Gérer</a>-->
+                            <div class="dropdown show">
+                                <a class="nav-link dropdown-toggle" style="color:white!important;" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Gérer
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="/manage_users">Utilisateurs</a>
+                                    <a class="dropdown-item" href="/manage_offers">Annonces</a>
+                                </div>
+                            </div>
+                        </li>
+                    {% endif %}
                 </ul>
                 <a class="nav-link" href="/profile" style="color:white!important;"><i class="fa fa-user" aria-hidden="true"></i></a>
                 <a class="nav-link" href="/disconnect" style="color:white!important;"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
@@ -58,7 +73,7 @@
                     {% if user_offers|length %}
                         {% for offer_info in user_offers %}
                             <a class="offer_container_link" href="#">
-                                <div class="row">
+                                <div class="row offer_container">
                                     <div class="col-md-9">
                                         <h3>{{ offer_info[3] }}</h3>
                                         <p>{{ offer_info[4] }}</p>

@@ -28,7 +28,7 @@ class Database:
         connect.commit()
         sql = """INSERT into Users_Role
                                  ('user_id', 'role_id') 
-                                 VALUES ((SELECT user_id from regularsUsers WHERE email=?), 1);"""
+                                 VALUES ((SELECT user_id from regularsUsers WHERE email=?), 2);"""
         data = (email,)
         cur.execute(sql, data)
         connect.commit()
@@ -40,10 +40,21 @@ class Database:
                     (prenom, nom, email, phonenumber, id,))
         connect.commit()
 
+    def change_user_status(self, id, status):
+        connect = self.get_connection()
+        cur = connect.cursor()
+        if status == "Actif":
+            cur.execute("UPDATE regularsUsers SET status='Inactif' WHERE user_id= ?",
+                        (id,))
+        else:
+            cur.execute("UPDATE regularsUsers SET status='Actif' WHERE user_id= ?",
+                        (id,))
+        connect.commit()
+
     def get_user_by_mail(self, email):
         connect = self.get_connection()
         cur = connect.cursor()
-        cur.execute("SELECT user_id,email,password FROM regularsUsers WHERE email= ?", (email,))
+        cur.execute("SELECT user_id,email,password,status FROM regularsUsers WHERE email= ?", (email,))
         result = cur.fetchone()
         if result is None:
             return None
@@ -73,11 +84,11 @@ class Database:
     def search_offers(self, key_word, categorie):
         connect = self.get_connection()
         cur = connect.cursor()
-        if categorie == -1 and key_word:
+        if categorie == "-1" and key_word:
             cur.execute("SELECT * FROM Offers WHERE offer_title LIKE ?", ('%'+key_word+'%',))
-        elif key_word and categorie != -1:
+        elif key_word and categorie != "-1":
             cur.execute("SELECT * FROM Offers WHERE offer_title LIKE ? AND offer_categorie_id= ?", ('%'+key_word+'%', categorie,))
-        elif not key_word and categorie != -1:
+        elif not key_word and categorie != "-1":
             cur.execute("SELECT * FROM Offers WHERE offer_categorie_id = ? ",
                         (categorie,))
         else:
@@ -153,6 +164,26 @@ class Database:
         data = (user_id,)
         cur.execute(sql, data)
         result = cur.fetchone()
+        if result is None:
+            return None
+        else:
+            return result
+
+    def get_all_users(self):
+        connect = self.get_connection()
+        cur = connect.cursor()
+        cur.execute("SELECT * FROM regularsUsers")
+        result = cur.fetchall()
+        if result is None:
+            return None
+        else:
+            return result
+
+    def get_all_users_except_actual(self, id):
+        connect = self.get_connection()
+        cur = connect.cursor()
+        cur.execute("SELECT * FROM regularsUsers WHERE user_id != ?", (id,))
+        result = cur.fetchall()
         if result is None:
             return None
         else:

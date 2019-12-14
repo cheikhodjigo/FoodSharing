@@ -5,5 +5,6 @@ CREATE TABLE regularsUsers (
     last_name varchar(255) NOT NULL,
     email varchar(255) NOT NULL UNIQUE,
     password varchar(255) NOT NULL,
-    phonenumber varchar(255)
+    phonenumber varchar(255),
+    status varchar(255)
 );
