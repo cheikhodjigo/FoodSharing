@@ -1,8 +1,7 @@
 # FoodSharing
 
 ## Description
-Web application that allow people to buy and sell 
-homemade food.
+Web application that allow people to buy and sell food.
 
 ## Technologies
 
