@@ -14,5 +14,5 @@ Javascript, Bootstrap and JQuery.
 
 When the application is launched we first head into the home page below:
 
-! [alt text](https://github.com/cheikhodjigo/FoodSharing/blob/master/static/img/Screen%20Shot%20Add%20Food.png "FoodSharing home page")
+![Home Page](https://github.com/cheikhodjigo/FoodSharing/blob/master/static/img/Screen%20Shot%20Add%20Food.png)
 
