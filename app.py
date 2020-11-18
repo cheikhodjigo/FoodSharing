@@ -260,3 +260,6 @@ def disconnect_user():
     if session.get('id') is not None:
         session.pop('id', None)
     return redirect('/')
+
+if __name__ == '__main__':
+    app.run(host ='0.0.0.0', port = 5001, debug = False)
